@@ -37,7 +37,7 @@ public class RoomManagement {
         try {
             String fileName = "Room.txt";
             BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
-            bw.write(""); // Ghi một chuỗi rỗng để xóa dữ liệu trong file
+            bw.write(""); 
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
