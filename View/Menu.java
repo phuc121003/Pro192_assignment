@@ -30,8 +30,8 @@ public abstract class Menu<T> {
         System.out.print("Enter selection: ");
         return sc.nextLine();
     }
-    
-    public abstract void excute(String n);
+//    ------------------------------------------------------------------------------------    
+    public abstract void execute(String n);
 //    ------------------------------------------------------------------------------------
     public void run() {
         while(true) {
