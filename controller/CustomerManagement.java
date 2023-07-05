@@ -1,6 +1,7 @@
 
 package controller;
 
+import View.Menu;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,28 +21,15 @@ public class CustomerManagement extends Menu<String>{
         super("Customer Management System!!!",menu);
     }
     //-------------------------------------------
-    @Override
-    public void execute(int n){
+    public void execute(String n){
         switch (n) {
-            case 1:
-                addCus();
-                break;
-            case 2:
-                displayAllCus();
-                break;
-            case 3:
-                updateCus();
-                break;
-            case 4:
-                searchCus();
-                break;
-            case 5:
-                deleteCus();
-                break;
-            case 6:
-                sortCus();
-                break;
-            case 7: close();
+            case "1" -> addCus();
+            case "2" -> displayAllCus();
+            case "3" -> updateCus();
+            case "4" -> searchCus();
+            case "5" -> deleteCus();
+            case "6" -> sortCus();
+            case "7" -> close();
         }
     }
     //--------------------------------------------
@@ -84,40 +72,40 @@ public class CustomerManagement extends Menu<String>{
     //----------------------------------------------
     public void updateCus() {
         String[] mUpdate = {"Update name", "Update phone", "Update address", "Update gender", "Update date of birth", "Update bill ID", "Update day rent"};
-        Menu m = new Menu("Customer Updating System!!!", mUpdate);
+        Menu m = new Menu("Customer Updating System!!!", mUpdate){
         @Override
-        public void execute(int n) {
+        public void execute(String n) {
             System.out.println("Enter customer ID: ");
             String id = sc.nextLine();
             if (check(id) != -1) {
                 switch (n) {
-                case 1:
+                case "1":
                     String name = getValue("Enter name you want to update: ");
                     cus.get(check(id)).setName(name);
                     break;
-                case 2:
+                case "2":
                     String phone = getValue("Enter phone you want to update: ");
                     cus.get(check(id)).setPhone(phone);
                     break;
-                case 3:
+                case "3":
                     String address = getValue("Enter address you want to update: ");
                     cus.get(check(id)).setAddress(address);
                     break;
-                case 4:
+                case "4":
                     String genderStr = getValue("Enter gender you want to update (true for male, false for female): ");
                     boolean gender = Boolean.parseBoolean(genderStr);
                     cus.get(check(id)).setGender(gender);
                     break;
-                case 5:
+                case "5":
                     String dateOfBirthStr = getValue("Enter date of birth you want to update (yyyy-mm-dd): ");
                     LocalDate dateOfBirth = LocalDate.parse(dateOfBirthStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                     cus.get(check(id)).setDateOfBirth(dateOfBirth);
                     break;
-                case 6:
+                case "6":
                     String billID = getValue("Enter bill ID you want to update: ");
                     cus.get(check(id)).setBillID(billID);
                     break;
-                case 7:
+                case "7":
                     String dayRentStr = getValue("Enter day rent you want to update: ");
                     int dayRent = Integer.parseInt(dayRentStr);
                     cus.get(check(id)).setDayRent(dayRent);
@@ -127,23 +115,24 @@ public class CustomerManagement extends Menu<String>{
                 }
             }
         }
+        };
         m.run();
     }
     //------------------------------------
     public void searchCus(){
         String[] mSearch ={"Search by id","Search by name"};
-        Menu m = new Menu("Customer Searching System!!!",mSearch);
+        Menu m = new Menu("Customer Searching System!!!",mSearch){
         @Override
-        public void execute(int n) {
+        public void execute(String n) {
             List<Customer> result = new ArrayList<>(); 
             switch(n){
-                case 1: 
+                case "1": 
                     String val = getValue("Enter CustomerID :");
                     result = cus.stream()
                         .filter(c -> c.getId() == val)
                         .collect(Collectors.toList());
                     break;
-                case 2:
+                case "2":
                     val = getValue("Enter name: ");
                     result = cus.stream()
                         .filter(c -> c.getName().contains(val))
@@ -154,6 +143,7 @@ public class CustomerManagement extends Menu<String>{
             for (Customer customer : cus)
                 customer.toString();
         }
+        };
         m.run();
     }
     //---------------------------------------
