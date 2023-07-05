@@ -351,7 +351,7 @@ public class MenuRoom {
                         System.out.println("3. Return Menu");
                         price = null;
                         int choice3 = scanner.nextInt();
-                        scanner.nextLine(); // Đọc dòng new line sau khi đọc số nguyên
+                        scanner.nextLine(); 
 
                         switch (choice3) {
                             case 1:
