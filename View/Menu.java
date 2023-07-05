@@ -36,8 +36,7 @@ public abstract class Menu<T> {
     public void run() {
         while(true) {
             String selected = getSelected();
-            if(selected.equals("0")) return;
-            excute(selected);
+            execute(selected);
         }
     }
 //    ------------------------------------------------------------------------------------
