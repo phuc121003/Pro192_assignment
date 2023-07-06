@@ -16,8 +16,10 @@ public abstract class Menu<T> {
     }
 //    ------------------------------------------------------------------------------------
     public void display() {
-        System.out.println(title);
-        System.out.println("---------------------------------------");
+        System.out.println("\n");
+        System.out.println("=======================================");
+        System.out.println("\t" + title + "\t");
+        System.out.println("=======================================");
         for(int i=0; i<listOptions.size(); i++) {
             System.out.println((i+1) + "." + listOptions.get(i));
         }
@@ -31,12 +33,13 @@ public abstract class Menu<T> {
         return sc.nextLine();
     }
 //    ------------------------------------------------------------------------------------    
-    public abstract void execute(String n);
+    public abstract void execute(String selected);
 //    ------------------------------------------------------------------------------------
     public void run() {
         while(true) {
             String selected = getSelected();
             execute(selected);
+            if(selected.equals(Integer.toString(listOptions.size()))) return;
         }
     }
 //    ------------------------------------------------------------------------------------
