@@ -13,11 +13,6 @@ public class Customer extends Person{
         this.room = room;
         this.dayRent = dayRent;
     }
-
-    public Customer() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     public Room getRoom() {
         return room;
     }
