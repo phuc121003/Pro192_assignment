@@ -6,10 +6,11 @@ public class Room {
     private String roomType;
     private float price;
     private boolean isRented = false;
+    public Object getRoomID;
 
     public Room() {
     }
-    
+
     public Room(String roomID, String roomType, float price, boolean isRented) {
         this.roomID = roomID;
         this.roomType = roomType;
