@@ -7,13 +7,10 @@ public class Customer extends Person{
     private String billID;
     private int dayRent;
 
-    public Customer(String id, String name, String phone, String address, boolean gender, LocalDate dateOfBirth,String billID, int dayRent) {
-        super(id, name, phone, address, gender, dateOfBirth);
+    public Customer(String id, String name, String phone, String address, boolean gender, LocalDate dateOfBirth,String email,String billID, int dayRent) {
+        super(id, name, phone, address, gender, dateOfBirth, email);
         this.billID = billID;
         this.dayRent = dayRent;
-    }
-
-    public Customer() {
     }
 
     public String getBillID() {
