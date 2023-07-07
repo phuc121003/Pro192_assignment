@@ -7,12 +7,16 @@ import model.Room.Room;
 public class Customer extends Person{
     private Room room;
     private int dayRent;
-
+ 
+    public Customer() { 
+    }
+    
     public Customer(String id, String name, String phone, String address, boolean gender, LocalDate dateOfBirth,String email,Room room, int dayRent) {
         super(id, name, phone, address, gender, dateOfBirth, email);
         this.room = room;
         this.dayRent = dayRent;
     }
+
     public Room getRoom() {
         return room;
     }

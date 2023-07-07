@@ -8,6 +8,8 @@ public class Person {
     private boolean gender;
     private LocalDate dateOfBirth;
     
+    public Person(){}
+    
     public Person(String id, String name, String phone, String address, boolean gender,LocalDate dateOfBirth,String email) {
         this.id = id;
         this.name = name;
