@@ -9,9 +9,11 @@ public class Validation {
         return !name.isEmpty() && name.matches("[A-Z][a-zA-Z ]*");
     }
     //--------------------------------------------------------------
+    
     public static boolean isValidPhone(String phone) {
         return phone != null && phone.matches("09\\d{8}");
     }
+    
     //--------------------------------------------------------------
     public static boolean isValidPositiveInt(int number) {
     return number >= 0 && String.valueOf(number).matches("\\d+");
