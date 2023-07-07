@@ -197,5 +197,4 @@ public class RoomManagement extends Menu<String>{
         Collections.sort(rooms, (Room o1, Room o2) -> o1.getRoomID().compareTo(o2.getRoomID()));
     }
     
-    
 }

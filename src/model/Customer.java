@@ -1,33 +1,33 @@
 
 package model;
 
-import model.Room.Room;
 import java.time.LocalDate;
+import model.Room.Room;
 
 public class Customer extends Person{
-    private String billID;
-    private int dayRent;
     private Room room;
+    private int dayRent;
 
-    public Customer(String id, String name, String phone, LocalDate dateOfBirth,String billID, int dayRent, Room room) {
-        super(id, name, phone, dateOfBirth);
-        this.billID = billID;
+    public Customer(String id, String name, String phone, String address, boolean gender, LocalDate dateOfBirth,String email,Room room, int dayRent) {
+        super(id, name, phone, address, gender, dateOfBirth, email);
+        this.room = room;
         this.dayRent = dayRent;
     }
 
     public Customer() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public String getBillID() {
-        return billID;
+    public Room getRoom() {
+        return room;
     }
 
     public int getDayRent() {
         return dayRent;
     }
 
-    public void setBillID(String billID) {
-        this.billID = billID;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public void setDayRent(int dayRent) {
@@ -36,6 +36,9 @@ public class Customer extends Person{
 
     @Override
     public String toString() {
-        return "Customer{" + "id=" + this.getId() + ", name=" + this.getName() + ", phone=" + this.getPhone()+ ", dateOfBirth=" + this.getDateOfBirth() + "billID=" + billID + ", dayRent=" + dayRent + '}';
+        String genderString = isGender() ? "male" : "female";
+        return "|" + getId() + "\t" + getName() + "\t" + getPhone() + "\t" + genderString + "\t" + getDateOfBirth().getYear() + "\t" + getEmail() + "|"+room.getRoomID()+"\t"
+        +room.getRoomType()+"\t"+"|"+room.getPrice();
     }
+
 }
