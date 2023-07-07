@@ -4,7 +4,6 @@
  */
 package View;
 
-import controller.CustomerManagement;
 import controller.RoomManagement;
 
 /**
