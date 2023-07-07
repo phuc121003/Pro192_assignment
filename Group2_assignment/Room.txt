@@ -1,2 +1,0 @@
-101, Single Room, 300000.0, true
-301, Couple Room, 500000.0, true
