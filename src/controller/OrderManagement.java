@@ -92,6 +92,7 @@ public class OrderManagement {
         customerOrder.forEach(p -> System.out.println(p));
     }
  //---------------------------------------------------------
+    
    public static ArrayList<Customer> search(Predicate<Customer> p) {
         ArrayList<Customer> rs = new ArrayList<>();
         for (Customer s : customerOrder) {
@@ -101,6 +102,7 @@ public class OrderManagement {
         }
         return rs;
    }
+   
   //--------------------------------------------------------
     public boolean deleteOrder(String id){
         Customer customerToDelete = new Customer();
