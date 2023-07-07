@@ -1,5 +1,6 @@
 package controller;
 
+import View.Validation;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -17,8 +18,8 @@ public class OrderManagement {
     public OrderManagement() {
         Scanner sc = new Scanner(System.in);
     }
-
-    static private ArrayList<Customer> customerOrder = new ArrayList<>();
+    Validation val = new Validation();
+    public static ArrayList<Customer> customerOrder = new ArrayList<>();
 
     // -----------------------------------------------------------
     public static String getString(String pr, String pattern) {
@@ -60,7 +61,7 @@ public class OrderManagement {
             return false;
         }
     }
-
+    
     // --------------------------------------------------------
     public static String getDate(String pr) {
         String str;
@@ -97,12 +98,12 @@ public class OrderManagement {
     }
 
     // ----------------------------------------------------------
-    public void displayAllOrder() {
+    public void displayAllOrder(ArrayList<Customer> customerOrder) {
         customerOrder.forEach(p -> System.out.println(p));
     }
     // ---------------------------------------------------------
 
-    public static ArrayList<Customer> search(Predicate<Customer> p) {
+    public ArrayList<Customer> search(Predicate<Customer> p) {
         ArrayList<Customer> rs = new ArrayList<>();
         for (Customer s : customerOrder) {
             if (p.test(s)) {
