@@ -3,11 +3,11 @@ package View;
 import java.util.Scanner;
 
 import controller.RoomManagement;
+import model.Room.Room;
 
 public class MenuRoom extends Menu<String> {
 
-    static String[] roomOptions = { "Display Rented Room.", "Rent Room.", "Update Price's Room.", "Search ID's Room.",
-            "Delete Status's Room" };
+    static String[] roomOptions = { "Display All Room.", "Update Price's Room.", "Search ID's Room.", "Exit"};
     private RoomManagement roomManagement = new RoomManagement();
     Scanner sc = new Scanner(System.in);
 
@@ -19,7 +19,7 @@ public class MenuRoom extends Menu<String> {
     public void execute(String selected) {
         switch (selected) {
             case "1":
-                displayRentedRoom();
+                displayRoom();
                 break;
             case "2":
                 rentRoom();
@@ -38,22 +38,34 @@ public class MenuRoom extends Menu<String> {
         }
     }
 
+    public void displayRoom() {
+        System.out.println("|ID\tTYPE\t\tPRICE\t\tSTATUS  |");
+        roomManagement.display();
+    }
+
     public void displayRentedRoom() {
         if (roomManagement.getRentedRoom().isEmpty()) {
             System.out.println("Empty list, No display can be performed");
         } else {
+            System.out.println("|ID\tTYPE\t\tPRICE\t\tSTATUS  |");
             roomManagement.getRentedRoom().forEach(p -> System.out.println(p));
         }
     }
 
     public void rentRoom() {
-        System.out.println("Enter type's room:");
-        String typeRoom = sc.nextLine();
-        if (roomManagement.rentRoom(typeRoom)) {
-            System.out.println("Rented succesfull!");
-        } else {
-            System.out.println("Fault!");
-        }
+        String[] roomType = {"Single Room", "Couple Room", "Exit"};
+        Menu rentRoomMenu = new Menu("Order Room", roomType) {
+            @Override
+            public void execute(String selected) {
+                Room room = roomManagement.rentRoom(selected);
+                if(room!=null) {
+                    System.out.println("Room" + room.getRoomID() + " has been rented successfully.");
+                } else {
+                    System.out.println("Availability is full! Try again later please.");
+                }
+            }
+        };
+        rentRoomMenu.run();;
     }
 
     public void updateRoomPrice() {

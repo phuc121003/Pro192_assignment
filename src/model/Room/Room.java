@@ -52,7 +52,8 @@ public class Room {
 
     @Override
     public String toString() {
-        return "|" + roomID + "\t" + roomType + "\t" + price + "\t" + isRented + "|";
+        String status = isRented?"Occupied":"Vacant  ";
+        return "|" + roomID + "\t" + roomType + "\t" + price + "\t" + status + "|";
     }
 
 }

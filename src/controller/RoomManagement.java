@@ -43,23 +43,17 @@ public class RoomManagement {
         rooms.forEach(p -> System.out.println(p));
     }
 
-    public boolean rentRoom(String roomType) {
-        if (roomType.equalsIgnoreCase("single room")) {
-            for (Room room : rooms) {
-                if (room.getRoomType().equalsIgnoreCase("single room") && !room.isIsRented()) {
-                    room.setIsRented(true);
-                    return true;
-                }
-            }
-        } else if (roomType.equalsIgnoreCase("couple room")) {
-            for (Room room : rooms) {
-                if (room.getRoomType().equalsIgnoreCase("couple room") && !room.isIsRented()) {
-                    room.setIsRented(true);
-                    return true;
-                }
+    public Room rentRoom(String choice) {
+        for(Room room: rooms) {
+            if(!room.isIsRented() && choice.equals("1") && room.getRoomType().equals("Single Room")){
+                room.setIsRented(true);
+                return room;
+            } else if(!room.isIsRented() && choice.equals("2") && room.getRoomType().equals("Couple Room")){
+                room.setIsRented(true);
+                return room;
             }
         }
-        return false;
+        return null;
     }
 
     public boolean updateRoomPrice(String id, float price) {

@@ -1,10 +1,7 @@
 package controller;
 
 import View.Validation;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,18 +15,16 @@ public class OrderManagement {
     public OrderManagement() {
         Scanner sc = new Scanner(System.in);
     }
-    Validation val = new Validation();
     public static ArrayList<Customer> customerOrder = new ArrayList<>();
     // -----------------------------------------------------------
     public boolean OrderRoom() {
-        String id = val.getString("Enter customer's id: ", "^KH\\d{4}+$");
-        String name = val.getString("Enter customer's name: ", "[a-zA-Z ]+$");
-        String phone = val.getString("Enter customer's phone:", "^0\\d{9}+$");
-        String genderStr = val.getString("Enter customer's gender (true = male;false = female):", "true|false+$");
+        String id = Validation.getString("Enter customer's id: ", "^KH\\d{4}+$");
+        String name = Validation.getString("Enter customer's name: ", "[a-zA-Z ]+$");
+        String phone = Validation.getString("Enter customer's phone:", "^0\\d{9}+$");
+        String genderStr = Validation.getString("Enter customer's gender (true = male;false = female):", "true|false+$");
         boolean gender = Boolean.parseBoolean(genderStr);
-        String dateOfBirthStr = val.getDate("Enter customer's date of birth: ");
-        LocalDate dateOfBirth = LocalDate.parse(dateOfBirthStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        String email = val.getString("Enter customer's email: ", "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+        LocalDate dateOfBirthStr = Validation.getDate("Enter customer's date of birth: ");
+        String email = Validation.getString("Enter customer's email: ", "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
         Room room = new Room();
 //        do {
 //        String roomId = val.getString("Enter room id of customer: ", "[0-9]");
@@ -58,7 +53,46 @@ public class OrderManagement {
         }
         return rs;
     }
-
+    // -------------------------------------------------------
+    public boolean updateCustomer(Customer customer, String id, String name, String phone, LocalDate dateOfBirth, String address, String gender, String email, Room room) {
+        boolean updated = false;
+    
+        if (id != null) {
+            customer.setId(id);
+            updated = true;
+        }
+        if (name != null) {
+            customer.setName(name);
+            updated = true;
+        }
+        if (phone != null) {
+            customer.setPhone(phone);
+            updated = true;
+        }
+        if (dateOfBirth != null) {
+            customer.setDateOfBirth(dateOfBirth);
+            updated = true;
+        }
+        if (address != null) {
+            customer.setAddress(address);
+            updated = true;
+        }
+        if (gender != null) {
+            boolean parsedGender = Boolean.parseBoolean(gender);
+            customer.setGender(parsedGender);
+            updated = true;
+        }
+        if (email != null) {
+            customer.setEmail(email);
+            updated = true;
+        }
+        if (room != null) {
+            customer.setRoom(room);
+            updated = true;
+        }
+        
+        return updated;
+    }
     // --------------------------------------------------------
     public boolean deleteOrder(String id) {
         Customer customerToDelete = new Customer();
@@ -72,7 +106,7 @@ public class OrderManagement {
             return false;
         String confirmation = "";
         do {
-            confirmation = val.getString("Are you sure you want to delete the customer? (Yes/No): ");
+            confirmation = Validation.getString("Are you sure you want to delete the customer? (Yes/No): ");
 
             if (confirmation.equalsIgnoreCase("Yes")) {
                 customerOrder.remove(customerToDelete);
