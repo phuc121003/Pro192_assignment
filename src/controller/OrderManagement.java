@@ -20,81 +20,27 @@ public class OrderManagement {
     }
     Validation val = new Validation();
     public static ArrayList<Customer> customerOrder = new ArrayList<>();
-
-    // -----------------------------------------------------------
-    public static String getString(String pr, String pattern) {
-        String str;
-        Scanner sc = new Scanner(System.in);
-        do {
-            System.out.print(pr);
-            str = sc.nextLine();
-            if (str.trim().isEmpty()) {
-                System.out.println("Can not empty, please re-enter!");
-            } else if (!str.matches(pattern)) {
-                System.out.println("Invalid, please re-enter!");
-            }
-        } while (str.trim().isEmpty() || !str.matches(pattern));
-        return str.toUpperCase();
-    } // -------------------------------------------------------
-
-    public static String getString(String pr) {
-        String str;
-        Scanner sc = new Scanner(System.in);
-        do {
-            System.out.print(pr);
-            str = sc.nextLine();
-            if (str.trim().isEmpty()) {
-                System.out.println("Can not empty, please re-enter!");
-            }
-        } while (str.trim().isEmpty());
-        return str.toUpperCase();
-    }
-
-    // -------------------------------------------------------
-    public static boolean validDay(String str) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        dateFormat.setLenient(false);
-        try {
-            dateFormat.parse(str);
-            return true;
-        } catch (ParseException e) {
-            return false;
-        }
-    }
-    
-    // --------------------------------------------------------
-    public static String getDate(String pr) {
-        String str;
-        Scanner sc = new Scanner(System.in);
-        do {
-            System.out.print(pr);
-            str = sc.nextLine();
-            if (str.trim().isEmpty()) {
-                System.out.println("Can not empty, please re-enter!");
-            } else if (!validDay(str)) {
-                System.out.println("Invalid, please re-enter!");
-            }
-        } while (str.trim().isEmpty() || !validDay(str));
-        return str;
-    }
-
     // -----------------------------------------------------------
     public boolean OrderRoom() {
-        String id = getString("Enter customer's id: ", "^KH\\d{4}+$");
-        String name = getString("Enter customer's name: ", "[a-zA-Z ]+$");
-        String phone = getString("Enter customer's phone:", "^0\\d{9}+$");
-        String genderStr = getString("Enter customer's gender (true = male;false = female):", "true|false+$");
+        String id = val.getString("Enter customer's id: ", "^KH\\d{4}+$");
+        String name = val.getString("Enter customer's name: ", "[a-zA-Z ]+$");
+        String phone = val.getString("Enter customer's phone:", "^0\\d{9}+$");
+        String genderStr = val.getString("Enter customer's gender (true = male;false = female):", "true|false+$");
         boolean gender = Boolean.parseBoolean(genderStr);
-        String dateOfBirthStr = getDate("Enter customer's date of birth: ");
+        String dateOfBirthStr = val.getDate("Enter customer's date of birth: ");
         LocalDate dateOfBirth = LocalDate.parse(dateOfBirthStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        String email = getString("Enter customer's email: ", "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+        String email = val.getString("Enter customer's email: ", "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
         Room room = new Room();
-        do {
-            String roomId = getString("Enter room id of customer: ", "[0-9]");
-            if (room.isIsRented())
-                System.out.println("This room have been rented");
-        } while (room.isIsRented());
-        return true;
+//        do {
+//        String roomId = val.getString("Enter room id of customer: ", "[0-9]");
+//        if (!room.isIsRented()) {
+//            customer.setRoomId(roomId);
+//            break;
+//        } else {
+//        System.out.println("This room has been rented.");
+//        }
+//}       while (room.isIsRented());
+        return false;
     }
 
     // ----------------------------------------------------------
@@ -126,7 +72,7 @@ public class OrderManagement {
             return false;
         String confirmation = "";
         do {
-            confirmation = getString("Are you sure you want to delete the customer? (Yes/No): ");
+            confirmation = val.getString("Are you sure you want to delete the customer? (Yes/No): ");
 
             if (confirmation.equalsIgnoreCase("Yes")) {
                 customerOrder.remove(customerToDelete);

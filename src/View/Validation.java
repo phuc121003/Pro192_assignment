@@ -1,6 +1,9 @@
 package View;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class Validation {
     //--------------------------------------------------------------
@@ -69,5 +72,60 @@ public class Validation {
         }
     }
     //-----------------------------------------------------------------------
+    public static String getString(String pr, String pattern) {
+        String str;
+        Scanner sc = new Scanner(System.in);
+        do {
+            System.out.print(pr);
+            str = sc.nextLine();
+            if (str.trim().isEmpty()) {
+                System.out.println("Can not empty, please re-enter!");
+            } else if (!str.matches(pattern)) {
+                System.out.println("Invalid, please re-enter!");
+            }
+        } while (str.trim().isEmpty() || !str.matches(pattern));
+        return str.toUpperCase();
+    } // -------------------------------------------------------
+
+    public static String getString(String pr) {
+        String str;
+        Scanner sc = new Scanner(System.in);
+        do {
+            System.out.print(pr);
+            str = sc.nextLine();
+            if (str.trim().isEmpty()) {
+                System.out.println("Can not empty, please re-enter!");
+            }
+        } while (str.trim().isEmpty());
+        return str.toUpperCase();
+    }
+
+    // -------------------------------------------------------
+    public static boolean validDay(String str) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(str);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+    
+    // --------------------------------------------------------
+    public static String getDate(String pr) {
+        String str;
+        Scanner sc = new Scanner(System.in);
+        do {
+            System.out.print(pr);
+            str = sc.nextLine();
+            if (str.trim().isEmpty()) {
+                System.out.println("Can not empty, please re-enter!");
+            } else if (!validDay(str)) {
+                System.out.println("Invalid, please re-enter!");
+            }
+        } while (str.trim().isEmpty() || !validDay(str));
+        return str;
+    }
 
 }

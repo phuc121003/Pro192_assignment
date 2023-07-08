@@ -12,7 +12,7 @@ import model.Room.Room;
 import model.Room.SingleRoom;
 
 public class RoomManagement {
-    protected ArrayList<Room> rooms = new ArrayList<>();;
+    public static ArrayList<Room> rooms = new ArrayList<>();;
     protected Scanner sc = new Scanner(System.in);;
 
     public RoomManagement() {
