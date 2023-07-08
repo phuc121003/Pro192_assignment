@@ -26,6 +26,14 @@ public class BillManagement {
         return null;
     }
 
+    public ArrayList<Bill> getBillByCustomerId(String id){
+        ArrayList<Bill> result=new ArrayList<>();
+        for (Bill bill : bills) {
+            if(bill.getCustomer().getId().equalsIgnoreCase(id)) result.add(bill);
+        }
+        return result;
+    }
+
     public ArrayList<Bill> getBillByCustomerName(String name){
         ArrayList<Bill> result=new ArrayList<>();
         for (Bill bill : bills) {

@@ -31,7 +31,7 @@ public class Bill {
     }
     @Override
     public String toString() {
-        return "Bill [id=" + id + ", customer=" + customer + ", room=" + room + "]";
+        return "| ID " + id + "    Customer " + customer.toString() + "    Room " + room.toString() + "    |";
     }
     
 }
