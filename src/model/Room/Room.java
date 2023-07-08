@@ -6,10 +6,11 @@ public class Room {
     private String roomType;
     private float price;
     private boolean isRented = false;
+    public Object getRoomID;
 
     public Room() {
     }
-    
+
     public Room(String roomID, String roomType, float price, boolean isRented) {
         this.roomID = roomID;
         this.roomType = roomType;
@@ -51,7 +52,8 @@ public class Room {
 
     @Override
     public String toString() {
-        return "|" + roomID + "\t" + roomType + "\t" + price + "\t" + isRented + "|";
+        String status = isRented?"Occupied":"Vacant  ";
+        return "|" + roomID + "\t" + roomType + "\t" + price + "\t" + status + "|";
     }
 
 }

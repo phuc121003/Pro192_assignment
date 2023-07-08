@@ -1,73 +1,74 @@
 package View;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class Validation {
-    //--------------------------------------------------------------
-    public static boolean isValidName(String name) {
-        name = name.trim();
-        return !name.isEmpty() && name.matches("[A-Z][a-zA-Z ]*");
+    // --------------------------------------------------------------------
+    public static final String REGEX_ID = "^KH\\\\d{4}+$";
+    public static final String REGEX_NAME = "[a-zA-Z ]+$";
+    public static final String REGEX_PHONE = "^0\\\\d{9}+$";
+    public static final String REGEX_ADDRESS = "[A-Za-z0-9 ]+$";
+    public static final String REGEX_GENDER = "true|false|TRUE|FALSE+$";
+    public static final String REGEX_EMAIL = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    public static final String DATE_FORMAT="dd/MM/yyyy";
+    public static final String REGEX_ROOM_ID = "^\\d{3}$";
+    //-----------------------------------------------------------------------
+    public static String getString(String pr, String pattern) {
+        String str;
+        Scanner sc = new Scanner(System.in);
+        do {
+            System.out.print(pr);
+            str = sc.nextLine();
+
+            if (!str.matches(pattern)) {
+                System.out.println("[ERROR] Invalid input! Please try again.");
+            }
+        } while (!str.matches(pattern));
+        return str.toUpperCase();
+    } // -------------------------------------------------------
+
+    public static String getString(String pr) {
+        String str;
+        Scanner sc = new Scanner(System.in);
+        do {
+            System.out.print(pr);
+            str = sc.nextLine();
+            if (str.trim().isEmpty()) {
+                System.out.println("[ERROR] Can not empty! Please try again!");
+            }
+        } while (str.trim().isEmpty());
+        return str.toUpperCase();
     }
-    //--------------------------------------------------------------
-    
-    public static boolean isValidPhone(String phone) {
-        return phone != null && phone.matches("09\\d{8}");
-    }
-    
-    //--------------------------------------------------------------
-    public static boolean isValidPositiveInt(int number) {
-    return number >= 0 && String.valueOf(number).matches("\\d+");
-    }
-    //--------------------------------------------------------------
-    public static boolean isValidDateOfBirth(String dateOfBirthStr) {
+
+    // -------------------------------------------------------
+    public static boolean validDay(String str) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate dateOfBirth = LocalDate.parse(dateOfBirthStr, formatter);
-
-            int year = dateOfBirth.getYear();
-            int month = dateOfBirth.getMonthValue();
-            int day = dateOfBirth.getDayOfMonth();
-
-            boolean isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-            int maxDaysInFebruary;
-            if (isLeapYear) maxDaysInFebruary = 29;
-            else maxDaysInFebruary = 28;
-
-            if (month < 1 || month > 12) {
-                System.out.println("Invalid month. Please enter a valid date of birth.");
-                return false;
-            }
-
-            switch (month) {
-                case 2: // Tháng 2
-                    if (day < 1 || day > maxDaysInFebruary) {
-                        System.out.println("Invalid day. Please enter a valid date of birth.");
-                        return false;
-                    }
-                    break;
-                case 4: // Tháng 4
-                case 6: // Tháng 6
-                case 9: // Tháng 9
-                case 11: // Tháng 11
-                    if (day < 1 || day > 30) {
-                        System.out.println("Invalid day. Please enter a valid date of birth.");
-                        return false;
-                    }
-                    break;
-                default: // Các tháng còn lại
-                    if (day < 1 || day > 31) {
-                        System.out.println("Invalid day. Please enter a valid date of birth.");
-                        return false;
-                    }
-                    break;
-            }
-
+            dateFormat.parse(str);
             return true;
-        } catch (Exception e) {
-            System.out.println("Invalid date format. Please enter a valid date of birth (dd/MM/yyyy).");
+        } catch (ParseException e) {
             return false;
         }
     }
-    //-----------------------------------------------------------------------
-
+    
+    // --------------------------------------------------------
+    public static LocalDate getDate(String pr) {
+        String dateStr;
+        Scanner sc = new Scanner(System.in);
+        do {
+            System.out.print(pr);
+            dateStr = sc.nextLine();
+        if (!validDay(dateStr)) {
+                System.out.println("[ERROR] Invalid input! Please try again.");
+            }
+        } while (!validDay(dateStr));
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+        LocalDate date = LocalDate.parse(dateStr, dateFormatter);
+        return date;
+    }
 }
+
