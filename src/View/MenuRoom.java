@@ -3,6 +3,7 @@ package View;
 import java.util.Scanner;
 
 import controller.RoomManagement;
+import model.Customer;
 import model.Room.Room;
 
 public class MenuRoom extends Menu<String> {
