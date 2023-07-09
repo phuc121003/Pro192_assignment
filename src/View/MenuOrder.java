@@ -4,7 +4,6 @@ import controller.OrderManagement;
 import static controller.OrderManagement.customerOrder;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -85,11 +84,11 @@ public class MenuOrder extends Menu<String>{
                             customerOrder.get(getIndexCustomerById(id)).setGender(gender);
                             break;
                         case "6":
-                            String email = Validation.getString("Enter email you want to update: ", "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+                            String email = Validation.getString("Enter email you want to update: ", Validation.REGEX_EMAIL);
                             customerOrder.get(getIndexCustomerById(id)).setEmail(email);
                             break;
                         case "7":
-                            String roomID = Validation.getString("Enter room you want to change", "^\\d{3}$");
+                            String roomID = Validation.getString("Enter room you want to change", Validation.REGEX_ROOM_ID);
                             for (Room room : rooms)
                             {}
                         }       
@@ -118,25 +117,27 @@ public class MenuOrder extends Menu<String>{
     }
     //--------------------------------------------------------------------------
     public void orderSearching(){
-        String[] mSearch ={"By id","By name","Type of room"};
+        String[] mSearch ={"By ID","By Name","Type Of Room", "Exit."};
         Menu m = new Menu("Order Searching System!!!",mSearch){
             @Override
             public void execute(String n){
                 ArrayList<Customer> rs = null;
                 switch(n){
                     case "1":
-                        String val = Validation.getString("Enter id you want to search","^KH\\d{4}+$");
+                        String val = Validation.getString("Enter id you want to search",Validation.REGEX_ID);
                         rs = ord.search(p->p.getId().equalsIgnoreCase(val));
                         break;
                     case "2":
-                        val = Validation.getString("Enter name you want to search", "[a-zA-Z ]+$");
+                        val = Validation.getString("Enter name you want to search", Validation.REGEX_NAME);
                         rs = ord.search(p->p.getName().equalsIgnoreCase(val));
                         break;
                     case "3":
                         val = Validation.getString("Enter type of room you want to search","Single Room|Couple Room");
                         rs = ord.search(p->p.getRoom().getRoomType().equalsIgnoreCase(val));
                         break;
-                    default: return;
+                    default: 
+                        System.out.println("[ERROR] Invalid input! Please try again.");
+                        break;
                 }
                     ord.displayAllOrder(rs);
             }
