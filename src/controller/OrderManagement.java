@@ -18,14 +18,14 @@ public class OrderManagement {
     public static ArrayList<Customer> customerOrder = new ArrayList<>();
     // -----------------------------------------------------------
     public boolean OrderRoom() {
-        String id = Validation.getString("Enter customer's id: ", "^KH\\d{4}+$");
-        String name = Validation.getString("Enter customer's name: ", "[a-zA-Z ]+$");
-        String phone = Validation.getString("Enter customer's phone:", "^0\\d{9}+$");
-        String genderStr = Validation.getString("Enter customer's gender (true = male;false = female):", "true|false+$");
+        String id = Validation.getString("Enter customer's id: ", Validation.REGEX_ID);
+        String name = Validation.getString("Enter customer's name: ", Validation.REGEX_NAME);
+        String phone = Validation.getString("Enter customer's phone:", Validation.REGEX_PHONE);
+        String genderStr = Validation.getString("Enter customer's gender (true = male;false = female):", Validation.REGEX_GENDER);
         boolean gender = Boolean.parseBoolean(genderStr);
-        LocalDate dateOfBirthStr = Validation.getDate("Enter customer's date of birth: ");
-        String email = Validation.getString("Enter customer's email: ", "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
-        Room room = new Room();
+        LocalDate dateOfBirth = Validation.getDate("Enter customer's date of birth: ");
+        String email = Validation.getString("Enter customer's email: ", Validation.REGEX_EMAIL);
+        
 //        do {
 //        String roomId = val.getString("Enter room id of customer: ", "[0-9]");
 //        if (!room.isIsRented()) {
