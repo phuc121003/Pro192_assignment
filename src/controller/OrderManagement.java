@@ -51,7 +51,7 @@ public class OrderManagement {
     public boolean displayAllOrder() {
         for(Customer customer : customerOrder) {
             if(customer.getRoom().isIsRented()) {
-                System.out.println(getCustomerOrdered());
+                System.out.println(customer);
                 return true;
             }
         }
