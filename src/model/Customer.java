@@ -38,7 +38,7 @@ public class Customer extends Person{
         String genderString = isGender() ? "male" : "female";
         return "|" + getId() + "\t" + getName() + "\t" + getPhone() + "\t" + genderString + "\t" 
         + getDateOfBirth() + "\t" + getEmail() + "\t"
-        + room.getRoomID() + "\t" + room.getRoomType() + "\t" + room.getPrice() +"|";
+        + room.getRoomID() + "\t" + room.getRoomType() + "\t" + dayRent*room.getPrice() +"|";
     }
 
 }
