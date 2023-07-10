@@ -40,6 +40,7 @@ public class OrderManagement {
 
             int dayRent = Integer.parseInt(Validation.getString("Enter number of day rent: ", "^[0-9]+$"));
             Customer customer = new Customer(id, name, phone, genderStr, gender, dateOfBirth, email, room, dayRent);
+            customerOrder.add(customer);
             return customer;
         } catch (Exception e) {
             System.out.println("[ERROR], Try again please.");
