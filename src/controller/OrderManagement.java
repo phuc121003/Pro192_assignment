@@ -23,7 +23,6 @@ public class OrderManagement {
 
 // -----------------------------------------------------------
     public Customer OrderRoom() {
-        try {
             String id = Validation.getString("Enter customer's id: ", Validation.REGEX_ID);
             String name = Validation.getString("Enter customer's name: ", Validation.REGEX_NAME);
             String phone = Validation.getString("Enter customer's phone:", Validation.REGEX_PHONE);
@@ -42,11 +41,10 @@ public class OrderManagement {
             Customer customer = new Customer(id, name, phone, genderStr, gender, dateOfBirth, email, room, dayRent);
             customerOrder.add(customer);
             return customer;
-        } catch (Exception e) {
-            System.out.println("[ERROR], Try again please.");
+
+            // System.out.println("[ERROR], Try again please.");
             // TODO: handle exception
-        }
-        return null;
+  
     }
 
 // ----------------------------------------------------------

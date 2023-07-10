@@ -48,13 +48,13 @@ public class MenuOrder extends Menu<String>{
     //--------------------------------------------------------------------------
     public void addOrder(){
         if (orderManagement.OrderRoom()!=null) 
-            System.out.println("Customer"+ orderManagement.OrderRoom().getId() +" rent room successfully!!");
+            System.out.println("Customer rent room successfully!!");
         else 
             System.out.println("Failed in renting room!!");
     }
 
     public void displayAllOrder() {
-        if(orderManagement.displayAllOrder()) {
+        if(!orderManagement.getCustomerOrdered().isEmpty()) {
                 System.out.println("----------------------------------------------------------------------------------------------");
                 System.out.println("|ID \t Name \t\t Phone \t\t Gender \t Day of Birth \t Email \t Room ID \t Room Type \t Room Price|");
                 orderManagement.displayAllOrder();
