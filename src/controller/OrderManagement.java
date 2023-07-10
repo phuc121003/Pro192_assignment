@@ -1,5 +1,6 @@
 package controller;
 
+import View.MenuRoom;
 import View.Validation;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,35 +13,34 @@ import model.Customer;
 import model.Room.Room;
 
 public class OrderManagement {
+    private ArrayList<Customer> customerOrder = new ArrayList<>();
+    private MenuRoom menuRoom = new MenuRoom();
+
     public OrderManagement() {
         Scanner sc = new Scanner(System.in);
     }
-    public static ArrayList<Customer> customerOrder = new ArrayList<>();
+
+
     // -----------------------------------------------------------
     public boolean OrderRoom() {
-        String id = Validation.getString("Enter customer's id: ", "^KH\\d{4}+$");
-        String name = Validation.getString("Enter customer's name: ", "[a-zA-Z ]+$");
-        String phone = Validation.getString("Enter customer's phone:", "^0\\d{9}+$");
-        String genderStr = Validation.getString("Enter customer's gender (true = male;false = female):", "true|false+$");
+        String id = Validation.getString("Enter customer's id: ", Validation.REGEX_ID);
+        String name = Validation.getString("Enter customer's name: ", Validation.REGEX_NAME);
+        String phone = Validation.getString("Enter customer's phone:", Validation.REGEX_PHONE);
+        String genderStr = Validation.getString("Enter customer's gender (true = male;false = female):", Validation.REGEX_GENDER);
         boolean gender = Boolean.parseBoolean(genderStr);
-        LocalDate dateOfBirthStr = Validation.getDate("Enter customer's date of birth: ");
-        String email = Validation.getString("Enter customer's email: ", "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
-        Room room = new Room();
-//        do {
-//        String roomId = val.getString("Enter room id of customer: ", "[0-9]");
-//        if (!room.isIsRented()) {
-//            customer.setRoomId(roomId);
-//            break;
-//        } else {
-//        System.out.println("This room has been rented.");
-//        }
-//}       while (room.isIsRented());
+        // LocalDate dateOfBirth = Validation.getDate("Enter customer's date of birth: ");
+        String email = Validation.getString("Enter customer's email: ", Validation.REGEX_EMAIL);
+        menuRoom.rentRoom();
         return false;
     }
 
     // ----------------------------------------------------------
-    public void displayAllOrder(ArrayList<Customer> customerOrder) {
-        customerOrder.forEach(p -> System.out.println(p));
+    public void displayAllOrder() {
+        for(Customer customer : customerOrder) {
+            if(customer.getRoom().isIsRented()) {
+                System.out.println(customer);
+            }
+        }
     }
     // ---------------------------------------------------------
 
@@ -94,6 +94,14 @@ public class OrderManagement {
         return updated;
     }
     // --------------------------------------------------------
+    public Customer searchCustomerId(String id) {
+        return customerOrder.stream()
+                            .filter(p -> p.getId().equalsIgnoreCase(id))
+                            .findFirst().orElse(null);
+    }
+
+    // --------------------------------------------------------
+
     public boolean deleteOrder(String id) {
         Customer customerToDelete = new Customer();
         for (Customer customer : customerOrder) {

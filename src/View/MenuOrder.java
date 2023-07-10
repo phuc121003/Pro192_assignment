@@ -1,10 +1,8 @@
 package View;
 
 import controller.OrderManagement;
-import static controller.OrderManagement.customerOrder;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,24 +24,20 @@ public class MenuOrder extends Menu<String>{
     @Override 
     public void execute(String n ){
         switch(n){
-            case "1":addOrder(); break;
-            case "2":ord.displayAllOrder(customerOrder);break;
-            case "3":orderUpdating();break;
-            case "4":orderSearching();break;
+            case "1": addOrder(); break;
+            case "2": ord.displayAllOrder(); break;
+            case "3": orderUpdating(); break;
+            case "4": orderSearching(); break;
             case "5":
-                String id = Validation.getString("Enter customer's id to delete order:", "^KH\\d{4}+$");
+                String id = Validation.getString("Enter customer's id to delete order:", Validation.REGEX_ID);
                 deleteOrder(id); break;
             case "6":ord.sortOrder(); break;
-            case "7": close();
-            default: return;
+            case "7": 
+                System.out.println("Back to main menu.");
+                break;
+            default: 
+                System.out.println("[ERROR] Invalid input! Please try again.");
         }
-    }
-    //--------------------------------------------------------------------------
-    public int getIndexCustomerById(String id){
-        for (Customer customer : customerOrder)
-            if (customer.getId().equalsIgnoreCase(id))
-                return customerOrder.indexOf(customer);
-        return -1;
     }
     //--------------------------------------------------------------------------
     public void addOrder(){
@@ -57,38 +51,37 @@ public class MenuOrder extends Menu<String>{
         Menu m = new Menu("Order Updating System!!!",mUpdate) {
                 @Override
                 public void execute(String n){
-                    String id = Validation.getString("Enter customer id you want to update: ","^KH\\d{4}+$");
-                    if (getIndexCustomerById(id) != -1){
+                    String id = Validation.getString("Enter customer id you want to update: ",Validation.REGEX_ID);
+                    Customer customer = ord.searchCustomerId(id);
+                    if (customer!=null){
                     switch(n){
                         case "1":
-                            String name = Validation.getString("Enter name you want to update: ","[a-zA-Z ]+$");
-                            customerOrder.get(getIndexCustomerById(id)).setName(name);
+                            String name = Validation.getString("Enter name you want to update: ",Validation.REGEX_NAME);
+                            customer.setName(name);
                             break;
                         case "2":
-                            String phone = Validation.getString("Enter phone you want to update: ", "^0\\d{9}+$");
-                            customerOrder.get(getIndexCustomerById(id)).setPhone(phone);
+                            String phone = Validation.getString("Enter phone you want to update: ", Validation.REGEX_PHONE);
+                            customer.setPhone(phone);
                             break;
                         case "3":
-                            String dateOfBirthStr = Validation.getString("Enter date of birth you want to update(yyyy-mm-dd): ","dd/MM/yyyy");
-                            LocalDate dateOfBirth = LocalDate.parse(dateOfBirthStr,
-                            DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                            customerOrder.get(getIndexCustomerById(id)).setDateOfBirth(dateOfBirth);
+                            LocalDate dateOfBirth = Validation.getDate("Enter date of birth you want to update(yyyy-mm-dd): ");
+                            customer.setDateOfBirth(dateOfBirth);
                             break;
                         case "4":
-                            String address = Validation.getString("Enter address you want to update: ","[a-zA-Z0-9]+$");
-                            customerOrder.get(getIndexCustomerById(id)).setAddress(address);
+                            String address = Validation.getString("Enter address you want to update: ",Validation.REGEX_ADDRESS);
+                            customer.setAddress(address);
                             break;
                         case "5":
-                            String genderStr = Validation.getString("Enter gender you want to change((true = male;false = female)","true|false+$");
+                            String genderStr = Validation.getString("Enter gender you want to change((true = male;false = female)",Validation.REGEX_GENDER);
                             boolean gender = Boolean.parseBoolean(genderStr);
-                            customerOrder.get(getIndexCustomerById(id)).setGender(gender);
+                            customer.setGender(gender);
                             break;
                         case "6":
-                            String email = Validation.getString("Enter email you want to update: ", "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
-                            customerOrder.get(getIndexCustomerById(id)).setEmail(email);
+                            String email = Validation.getString("Enter email you want to update: ", Validation.REGEX_EMAIL);
+                            customer.setEmail(email);
                             break;
                         case "7":
-                            String roomID = Validation.getString("Enter room you want to change", "^\\d{3}$");
+                            String roomID = Validation.getString("Enter room you want to change", Validation.REGEX_ROOM_ID);
                             for (Room room : rooms)
                             {}
                         }       
@@ -109,7 +102,7 @@ public class MenuOrder extends Menu<String>{
         String genderStr = Validation.getString("Input gender((true = male;false = female)",Validation.REGEX_GENDER);
         String email = Validation.getString("Input email: ", Validation.REGEX_EMAIL);
         String roomID = Validation.getString("Input ID'S Room: ", Validation.REGEX_ROOM_ID);
-        if(ord.updateCustomer(customerOrder.get(getIndexCustomerById(roomID)), roomID, name, phone, dateOfBirthStr, address, genderStr, email, null)) {
+        if(ord.updateCustomer(ord.searchCustomerId(id), roomID, name, phone, dateOfBirthStr, address, genderStr, email, null)) {
             System.out.println("Update successfull.");
         } else {
             System.err.println("Update failed.");
@@ -117,27 +110,29 @@ public class MenuOrder extends Menu<String>{
     }
     //--------------------------------------------------------------------------
     public void orderSearching(){
-        String[] mSearch ={"By id","By name","Type of room"};
+        String[] mSearch ={"By ID","By Name","Type Of Room", "Exit."};
         Menu m = new Menu("Order Searching System!!!",mSearch){
             @Override
             public void execute(String n){
                 ArrayList<Customer> rs = null;
                 switch(n){
                     case "1":
-                        String val = Validation.getString("Enter id you want to search","^KH\\d{4}+$");
+                        String val = Validation.getString("Enter id you want to search",Validation.REGEX_ID);
                         rs = ord.search(p->p.getId().equalsIgnoreCase(val));
                         break;
                     case "2":
-                        val = Validation.getString("Enter name you want to search", "[a-zA-Z ]+$");
+                        val = Validation.getString("Enter name you want to search", Validation.REGEX_NAME);
                         rs = ord.search(p->p.getName().equalsIgnoreCase(val));
                         break;
                     case "3":
                         val = Validation.getString("Enter type of room you want to search","Single Room|Couple Room");
                         rs = ord.search(p->p.getRoom().getRoomType().equalsIgnoreCase(val));
                         break;
-                    default: return;
+                    default: 
+                        System.out.println("[ERROR] Invalid input! Please try again.");
+                        break;
                 }
-                    ord.displayAllOrder(rs);
+                    System.out.println(rs);
             }
             };
                     m.run();
