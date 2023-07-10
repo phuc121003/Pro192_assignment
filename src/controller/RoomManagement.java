@@ -3,10 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-
 import model.Room.CoupleRoom;
 import model.Room.Room;
 import model.Room.SingleRoom;
@@ -43,12 +40,25 @@ public class RoomManagement {
         rooms.forEach(p -> System.out.println(p));
     }
 
-    public Room rentRoom(String choice) {
+    public Room rentRoomByType(String choice) {
         for(Room room: rooms) {
             if(!room.isIsRented() && choice.equals("1") && room.getRoomType().equals("Single Room")){
                 room.setIsRented(true);
                 return room;
             } else if(!room.isIsRented() && choice.equals("2") && room.getRoomType().equals("Couple Room")){
+                room.setIsRented(true);
+                return room;
+            }
+        }
+        return null;
+    }
+    
+    public Room rentRoomById(String id) {
+        for(Room room: rooms) {
+            if(!room.isIsRented() && room.getRoomID().equalsIgnoreCase(id)){
+                room.setIsRented(true);
+                return room;
+            } else if(!room.isIsRented() && room.getRoomID().equalsIgnoreCase(id)){
                 room.setIsRented(true);
                 return room;
             }
@@ -66,10 +76,10 @@ public class RoomManagement {
         return false;
     }
 
-    public List<Room> searchRoomById(String id) {
-        return (List<Room>) rooms.stream()
+    public Room searchRoomById(String id) {
+        return rooms.stream()
                 .filter(p -> p.getRoomID().equals(id))
-                .collect(Collectors.toList());
+                .findFirst().orElse(null);
     }
 
     public boolean deleteRoomStatus(String id) {

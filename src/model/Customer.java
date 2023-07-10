@@ -36,7 +36,9 @@ public class Customer extends Person{
     @Override
     public String toString() {
         String genderString = isGender() ? "male" : "female";
-        return "|" + getId() + "\t" + getName() + "\t" + getPhone() + "\t" + genderString + "\t" + getDateOfBirth().getYear() + "\t" + getEmail() + "|";
+        return "|" + getId() + "\t" + getName() + "\t" + getPhone() + "\t" + genderString + "\t" 
+        + getDateOfBirth().getYear() + "\t" + getEmail() + "\t"
+        + room.getRoomID() + "\t" + room.getRoomType() + "\t" + room.getPrice() +"|";
     }
 
 }

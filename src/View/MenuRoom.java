@@ -8,7 +8,7 @@ import model.Room.Room;
 
 public class MenuRoom extends Menu<String> {
 
-    static String[] roomOptions = { "Display All Room.", "Update Price's Room.", "Search ID's Room.", "Exit"};
+    static String[] roomOptions = { "Display All Room.", "Update Price's Room.", "Search ID's Room.", "Check out Room." , "Exit"};
     private RoomManagement roomManagement = new RoomManagement();
     Scanner sc = new Scanner(System.in);
 
@@ -23,15 +23,12 @@ public class MenuRoom extends Menu<String> {
                 displayRoom();
                 break;
             case "2":
-                rentRoom();
-                break;
-            case "3":
                 updateRoomPrice();
                 break;
-            case "4":
+            case "3":
                 searchRoomById();
                 break;
-            case "5":
+            case "4":
                 deleteRoomStatus();
                 break;
             default:
@@ -53,12 +50,12 @@ public class MenuRoom extends Menu<String> {
         }
     }
 
-    public void rentRoom() {
+    public void rentRoomByType() {
         String[] roomType = {"Single Room", "Couple Room", "Exit"};
         Menu rentRoomMenu = new Menu("Order Room", roomType) {
             @Override
             public void execute(String selected) {
-                Room room = roomManagement.rentRoom(selected);
+            Room room = roomManagement.rentRoomByType(selected);
                 if(room!=null) {
                     System.out.println("Room" + room.getRoomID() + " has been rented successfully.");
                 } else {
@@ -66,7 +63,11 @@ public class MenuRoom extends Menu<String> {
                 }
             }
         };
-        rentRoomMenu.run();;
+        rentRoomMenu.run();
+    }
+
+    public void rentRoomById() {
+        System.out.println("Enter id of room: ");
     }
 
     public void updateRoomPrice() {
@@ -85,7 +86,7 @@ public class MenuRoom extends Menu<String> {
         System.out.println("Enter Id to find a specific room.");
         String id = sc.nextLine();
 
-        if (roomManagement.searchRoomById(id).isEmpty()) {
+        if (roomManagement.searchRoomById(id)!=null) {
             System.out.println("Empty list, No search can be performed!");
         } else {
             System.out.println(roomManagement.searchRoomById(id));
@@ -95,10 +96,14 @@ public class MenuRoom extends Menu<String> {
     public void deleteRoomStatus() {
         System.out.println("Enter ID's room: ");
         String idRoom = sc.nextLine();
-        if (roomManagement.deleteRoomStatus(idRoom)) {
-            System.out.println("Delete status succesfull!");
-        } else {
-            System.out.println("Fault, Can not change status's room!");
+
+        try {
+            if (roomManagement.deleteRoomStatus(idRoom)) {
+                System.out.println("Delete status succesfull!");
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+             System.out.println("[ERROR], Try again please.");
         }
     }
 }
