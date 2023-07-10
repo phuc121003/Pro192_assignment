@@ -11,7 +11,7 @@ public class Customer extends Person{
     public Customer() { 
     }
     
-    public Customer(String id, String name, String phone, String address, boolean gender, LocalDate dateOfBirth,String email,Room room, int dayRent) {
+    public Customer(String id, String name, String phone, String address, boolean gender, String dateOfBirth,String email,Room room, int dayRent) {
         super(id, name, phone, address, gender, dateOfBirth, email);
         this.room = room;
         this.dayRent = dayRent;
@@ -36,7 +36,9 @@ public class Customer extends Person{
     @Override
     public String toString() {
         String genderString = isGender() ? "male" : "female";
-        return "|" + getId() + "\t" + getName() + "\t" + getPhone() + "\t" + genderString + "\t" + getDateOfBirth().getYear() + "\t" + getEmail() + "|";
+        return "|" + getId() + "\t" + getName() + "\t" + getPhone() + "\t" + genderString + "\t" 
+        + getDateOfBirth() + "\t" + getEmail() + "\t"
+        + room.getRoomID() + "\t" + room.getRoomType() + "\t" + dayRent*room.getPrice() +"|";
     }
 
 }

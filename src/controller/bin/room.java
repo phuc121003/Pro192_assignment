@@ -1,3 +1,4 @@
+package controller.bin;
 // package controller;
 
 // import View.Menu;

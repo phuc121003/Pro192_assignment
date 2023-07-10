@@ -7,5 +7,6 @@ public class Entry {
 
         MenuOrder menuOrder = new MenuOrder();
         menuOrder.run();
+        
     }
 }

@@ -1,16 +1,14 @@
 package model;
 
-import java.time.LocalDate;
-
 public class Person {
  
     private String id,name,phone,address,email;
     private boolean gender;
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
     
     public Person(){}
     
-    public Person(String id, String name, String phone, String address, boolean gender,LocalDate dateOfBirth,String email) {
+    public Person(String id, String name, String phone, String address, boolean gender,String dateOfBirth,String email) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -78,12 +76,12 @@ public class Person {
     }
 
 
-    public LocalDate getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

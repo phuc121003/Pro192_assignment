@@ -1,21 +1,19 @@
-package View;
+package controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Validation {
     // --------------------------------------------------------------------
     public static final String REGEX_ID = "^KH\\d{4}+$";
-    public static final String REGEX_NAME = "[a-zA-Z ]+$";
-    public static final String REGEX_PHONE = "^0\\d{9}+$";
-    public static final String REGEX_ADDRESS = "[A-Za-z0-9 ]+$";
-    public static final String REGEX_GENDER = "true|false|TRUE|FALSE+$";
-    public static final String REGEX_EMAIL = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-    public static final String DATE_FORMAT= "dd/MM/yyyy";
-    public static final String REGEX_ROOM_ID = "^\\d{3}$";
+    public static final String REGEX_NAME = "^[a-zA-Z ]*$";
+    public static final String REGEX_PHONE = "^0\\d{9}$";
+    public static final String REGEX_ADDRESS = "^[A-Za-z0-9 ]*$";
+    public static final String REGEX_GENDER = "true|false|TRUE|FALSE+";
+    public static final String REGEX_EMAIL = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]*$";
+    public static final String DATE_FORMAT= "dd/MM/yyyy*";
+    public static final String REGEX_ROOM_ID = "^\\d{3}*$";
     private static final Scanner sc = new Scanner(System.in);
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
@@ -61,19 +59,18 @@ public class Validation {
     }
     
     // --------------------------------------------------------
-    public static LocalDate getDate(String prompt) {
+    public static String getDate(String prompt) {
         String dateStr;
-
         do {
             System.out.print(prompt);
             dateStr = sc.nextLine();
-            try {
-                LocalDate date = LocalDate.parse(dateStr, dateFormatter);
-                return date;
-            } catch(DateTimeParseException e) {
-                System.out.println("[ERROR] Invalid input! Please try again.");
+            if(dateStr.equals(null)) return null;
+
+            if(!validDay(dateStr)) {
+                System.out.println("[ERROR], Try again please.");
             }
-        } while (true);
+        } while (!validDay(dateStr));
+        return dateStr;
     }
 }
 
