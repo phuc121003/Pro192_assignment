@@ -61,19 +61,18 @@ public class Validation {
     }
     
     // --------------------------------------------------------
-    public static LocalDate getDate(String prompt) {
+    public static String getDate(String prompt) {
         String dateStr;
-
         do {
             System.out.print(prompt);
             dateStr = sc.nextLine();
-            try {
-                LocalDate date = LocalDate.parse(dateStr, dateFormatter);
-                return date;
-            } catch(DateTimeParseException e) {
-                System.out.println("[ERROR] Invalid input! Please try again.");
+            if(dateStr.equals(null)) return null;
+
+            if(!validDay(dateStr)) {
+                System.out.println("[ERROR], Try again please.");
             }
-        } while (true);
+        } while (!validDay(dateStr));
+        return dateStr;
     }
 }
 

@@ -29,7 +29,7 @@ public class OrderManagement {
             String phone = Validation.getString("Enter customer's phone:", Validation.REGEX_PHONE);
             String genderStr = Validation.getString("Enter customer's gender (true = male;false = female):", Validation.REGEX_GENDER);
             boolean gender = Boolean.parseBoolean(genderStr);
-            LocalDate dateOfBirth = Validation.getDate("Enter customer's date of birth: ");
+            String dateOfBirth = Validation.getDate("Enter customer's date of birth: ");
             String email = Validation.getString("Enter customer's email: ", Validation.REGEX_EMAIL);
 
             System.out.println("1. Single Room.");
@@ -76,7 +76,7 @@ public class OrderManagement {
         return rs;
     }
 // -------------------------------------------------------
-    public boolean updateCustomer(Customer customer, String id, String name, String phone, LocalDate dateOfBirth, String address, String gender, String email, Room room) {
+    public boolean updateCustomer(Customer customer, String id, String name, String phone, String dateOfBirth, String address, String gender, String email, Room room) {
         boolean updated = false;
     
         if (id != null) {
@@ -125,7 +125,7 @@ public boolean updateCustomer() {
     
     String name = Validation.getString("Input name's customer: ",Validation.REGEX_NAME);
     String phone = Validation.getString("Input phone's customer: ", Validation.REGEX_PHONE);
-    LocalDate dateOfBirthStr = Validation.getDate("Input date of birth(dd/MM/yyyy): ");
+    String dateOfBirthStr = Validation.getDate("Input date of birth(dd/MM/yyyy): ");
     String address = Validation.getString("Input address: ",Validation.REGEX_ADDRESS);
     String genderStr = Validation.getString("Input gender((true = male;false = female)",Validation.REGEX_GENDER);
     String email = Validation.getString("Input email: ", Validation.REGEX_EMAIL);
